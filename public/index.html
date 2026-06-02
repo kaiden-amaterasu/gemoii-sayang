@@ -10,7 +10,6 @@
     <meta name="keywords" content="ulang tahun aidila, aidila septia, happy birthday, ucapan ultah, pesan cinta, galeri foto">
     <meta name="author" content="Muhamad Fabian Adha">
     <meta name="theme-color" content="#ff7597">
-    <meta name="google-site-verification" content="WdYKlxc136ZkfLKP7r9kcv6_BJ-Ue8obOMkxDxaKmOc" />
     <!-- ================================= -->
     
     <link rel="icon" type="image/png" href="logo-snoopy.png">
@@ -259,6 +258,9 @@
 
         .spotify-box h4 {
             font-family: 'Coolvetica';
+            color: var(--pk-dk);
+            margin-bottom: 12px;
+            font-size: 0.7rem;
         }
 
         #wishlist-section h3 {
@@ -542,10 +544,15 @@
             text-align: center;
         }
 
-        .spotify-box h4 {
-            color: var(--pk-dk);
-            margin-bottom: 12px;
+        /* Style untuk judul playlist */
+        .playlist-bg h4 {
+            font-family: 'Coolvetica';
             font-size: 0.7rem;
+            color: #ff7597;
+            font-style: bold;
+            letter-spacing: 1px;
+            margin: 0 0 10px 0;
+            text-align: center;
         }
 
         .spotify-track {
@@ -553,6 +560,28 @@
             border-radius: 12px;
             overflow: hidden;
             line-height: 0;
+        }
+
+        /* Style untuk playlist container */
+        .playlist-container {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 2px dashed var(--pk-lt);
+        }
+
+        /* Background untuk playlist */
+        .playlist-bg {
+            background: linear-gradient(135deg, rgba(255,117,151,0.15), rgba(255,158,190,0.1));
+            border-radius: 20px;
+            padding: 15px 12px;
+            margin-top: 8px;
+            border: 1px solid rgba(255,117,151,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .playlist-bg:hover {
+            background: linear-gradient(135deg, rgba(255,117,151,0.25), rgba(255,158,190,0.15));
+            border-color: rgba(255,117,151,0.6);
         }
 
         #chat-popup {
@@ -726,7 +755,7 @@
             gap: 4px;
             width: 100%;
             max-width: 380px;
-            aspect-ratio: 7/6;
+            aspect-ratio: 7/8;
             margin: 0 auto;
         }
 
@@ -738,6 +767,28 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s;
             cursor: pointer;
+            /* FORCE semua foto ke rasio 1:1 */
+            aspect-ratio: 1 / 1;
+        }
+
+        /* Perbaikan khusus untuk foto 24, 25, 26 (hc-24, hc-25, hc-26) */
+        .heart-cell.hc-24,
+        .heart-cell.hc-25,
+        .heart-cell.hc-26 {
+            object-fit: cover;
+            object-position: center;
+            aspect-ratio: 1 / 1;
+        }
+
+        /* Atur posisi fokus biar ga terlalu ekstrim */
+        .heart-cell.hc-24 {
+            object-position: center 35%;
+        }
+        .heart-cell.hc-25 {
+            object-position: center 30%;
+        }
+        .heart-cell.hc-26 {
+            object-position: center 40%;
         }
 
         .heart-cell:hover {
@@ -1110,31 +1161,6 @@
         </div>
         <button id="chat-btn" onclick="bukaChat()">💬<span class="badge">❤️</span></button>
 
-        <div id="clue-selfie-overlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:10000;justify-content:center;align-items:center;">
-            <div style="background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:25px;padding:30px;width:90%;max-width:380px;text-align:center;box-shadow:0 20px 60px rgba(255,117,151,0.6);border:2px solid rgba(255,117,151,0.4);">
-                <div style="display:inline-block;background:#ff7597;color:white;padding:8px 20px;border-radius:20px;font-weight:bold;letter-spacing:2px;margin-bottom:20px;">📸 VERIFIKASI</div>
-                <div style="font-size:5rem;margin-bottom:15px;">🤳</div>
-                <h3 style="color:#ff6b9d;font-size:1.3rem;margin-bottom:10px;">Ambil Foto Selfie Kamu!</h3>
-                <p style="color:#bbb;font-size:0.9rem;margin-bottom:25px;">Foto diri kamu sendiri untuk membuka isi clue dari pesan rahasia ini 📱✨</p>
-                <input type="file" id="selfie-input" accept="image/*" capture="user" style="display:none">
-                <button style="background:linear-gradient(135deg,#ff7597,#ff9ebe);color:white;border:none;padding:16px 35px;border-radius:50px;font-weight:bold;font-size:1.1rem;cursor:pointer;box-shadow:0 10px 30px rgba(255,117,151,0.4);" onclick="ambilSelfie()">📷 Ambil Foto Sekarang</button>
-                <button style="background:transparent;color:#ff6b9d;border:2px solid #ff6b9d;padding:8px 25px;border-radius:15px;font-weight:bold;margin-top:15px;cursor:pointer;" onclick="document.getElementById('clue-selfie-overlay').style.display='none'">Nanti aja</button>
-            </div>
-        </div>
-
-        <div id="clue-reveal-overlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:10001;justify-content:center;align-items:center;">
-            <div style="background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:20px;padding:30px;width:90%;max-width:380px;text-align:center;box-shadow:0 20px 60px rgba(255,117,151,0.6);border:2px solid rgba(255,117,151,0.4);">
-                <div style="display:inline-block;background:#ff7597;color:white;padding:8px 20px;border-radius:20px;font-weight:bold;letter-spacing:2px;margin-bottom:20px;">🔍 CLUE TERBUKA</div>
-                <div style="font-size:4rem;margin-bottom:15px;">🤫</div>
-                <h3 style="color:#ff6b9d;font-size:1.4rem;margin-bottom:15px;">Password HP Pabian</h3>
-                <div style="background:rgba(255,255,255,0.05);border:2px dashed rgba(255,117,151,0.5);border-radius:15px;padding:20px;margin:10px 0 20px 0;">
-                    <div style="color:#ffb3c6;font-size:1.5rem;font-weight:bold;letter-spacing:5px;">1 0 0 9 1 0</div>
-                </div>
-                <div style="color:#888;font-size:0.8rem;margin-top:10px;">📱 PIN yang selalu dia ingat...</div>
-                <button style="background:transparent;color:#ff6b9d;border:2px solid #ff6b9d;padding:10px 30px;border-radius:15px;font-weight:bold;cursor:pointer;margin-top:15px;" onclick="document.getElementById('clue-reveal-overlay').style.display='none'">🔒 Tutup Clue</button>
-            </div>
-        </div>
-
         <div id="secret-overlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:9998;justify-content:center;align-items:center;flex-direction:column;">
             <div id="scratch-wrapper" style="position:relative;width:90%;max-width:420px;background:white;border-radius:20px;overflow:hidden;box-shadow:0 20px 50px rgba(255,117,151,0.4);">
                 <div style="padding:35px 30px;text-align:center;min-height:280px;">
@@ -1142,7 +1168,7 @@
                     <p style="color:#555;line-height:1.9;font-size:1.05rem;">
                         kaks, kamu tau gax??<br>
                         setiap kali kamu tersenyum,<br>
-                        dunia enih jadi lebih indah tau kaks karna affahh? YESS kamu benar, karna ada nya seorang aidila septia yang mempunyai senyum manis semanis gula segede alam semesta! azzekk 🌸<br><br>
+                        dunia enih jadi lebih indah tau kaks karna affahh? YESS kamu benar, karna ada nya seorang aidila septia yang mempunyai senyum manis semanis gula segede alam semesta! azzekk 😭<br><br>
                         <strong>Happy Birthday Kak!</strong>
                     </p>
                 </div>
@@ -1167,7 +1193,7 @@
                     <input type="text" maxlength="1" id="wp6" inputmode="numeric" style="width:42px;height:50px;border:2px solid #ff9ebe;border-radius:12px;text-align:center;font-size:1.4rem;font-weight:bold;color:#ff7597;outline:none;">
                 </div>
                 <div id="pin-error" style="color:#ff3d6e;font-size:0.85rem;margin-bottom:12px;display:none;font-weight:bold;">❌ PIN salah! Coba lagi sayang..</div>
-                <button style="background:#ff7597;color:white;border:none;padding:14px 40px;border-radius:15px;font-weight:bold;font-size:1.05rem;cursor:pointer;margin-top:5px;box-shadow:0 5px 15px rgba(255,117,151,0.3);" onclick="cekPinWishlist()">Verifikasi 🔓</button>
+                <button style="background:#ff7597;color:white;border:none;padding:14px 40px;border-radius:15px;font-weight:bold;font-size:1.05rem;cursor:pointer;margin-top:5px;box-shadow:0 5px 15px rgba(255,117,151,0.3);" onclick="cekPinWishlist()">Verifikasi</button>
             </div>
         </div>
 
@@ -1195,7 +1221,7 @@
         <div class="nav-tabs">
             <button class="tab-btn active" onclick="bukaTab(event,'tentang')">TENTANG</button>
             <button class="tab-btn" onclick="bukaTab(event,'surat')">SURAT</button>
-            <button class="tab-btn" onclick="bukaTab(event,'dump')">PICTURE</button>
+            <button class="tab-btn" onclick="bukaTab(event,'dump')">MEMORI</button>
         </div>
 
         <div id="tentang" class="tab-content active" style="background:transparent;box-shadow:none;padding:0;">
@@ -1218,12 +1244,20 @@
                     <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
                 </div>
                 <div class="spotify-box">
-                    <h4>This song is a song that can make me remember you and us..</h4>
+                    <h4>— this song is a song that can make me remember you and us —</h4>
                     <div class="spotify-track">
-                        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/0jXwHMNDzsq2skoV5mgxRE?utm_source=generator" width="100%" height="80" frameborder="0" allow="autoplay;clipboard-write;encrypted-media;fullscreen;picture-in-picture" loading="lazy" title="Spotify playlist spesial untuk Aidila"></iframe>
+                        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/3W4U7TEgILGpq0EmquurtH?utm_source=generator" width="100%" height="80" frameborder="0" allow="autoplay;clipboard-write;encrypted-media;fullscreen;picture-in-picture" loading="lazy" title="Spotify playlist spesial untuk Aidila"></iframe>
                     </div>
                     <div class="spotify-track">
-                        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/3W4U7TEgILGpq0EmquurtH?utm_source=generator" width="100%" height="80" frameborder="0" allow="autoplay;clipboard-write;encrypted-media;fullscreen;picture-in-picture" loading="lazy" title="Spotify lagu kenangan untuk Aidila"></iframe>
+                        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/0jXwHMNDzsq2skoV5mgxRE?utm_source=generator" width="100%" height="80" frameborder="0" allow="autoplay;clipboard-write;encrypted-media;fullscreen;picture-in-picture" loading="lazy" title="Spotify lagu kenangan untuk Aidila"></iframe>
+                    </div>
+                    
+                    <!-- PLAYLIST SPOTIFY BARU DENGAN LATAR BELAKANG -->
+                    <div class="playlist-container">
+                        <div class="playlist-bg">
+                            <h4>— lots of your memories in this playlist aidila —</h4>
+                            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/2Zh4ObCcPGBpNv5NdVfZ0g?utm_source=generator" width="100%" height="152" frameborder="0" allow="autoplay;clipboard-write;encrypted-media;fullscreen;picture-in-picture" loading="lazy" title="Spotify playlist kenangan untuk Aidila"></iframe>
+                        </div>
                     </div>
                 </div>
                 <div class="pompompurin-row">
@@ -1247,7 +1281,7 @@
         <div id="dump" class="tab-content" data-loaded="false"></div>
 
         <div class="wishlist-container" id="wishlist-section">
-            <h3>-! LIST DATE BERSAMA SAMWAN !-</h3>
+            <h3>-! LIST DATe BeRSAMA SAMWAN !-</h3>
             <button class="btn-wishlist" onclick="document.getElementById('wishlist-pin-overlay').style.display='flex'">✨ Buka List Date ✨</button>
             <div id="wishlist-form" style="display:none">
                 <div class="date-card">
@@ -1258,7 +1292,7 @@
                 </div>
                 <div class="date-card">
                     <div class="date-title"><span>📆</span> 13 SEPTEMBER</div>
-                    <div class="date-item">Joging pagi</div>
+                    <div class="date-item">Joging sore</div>
                     <div class="date-item">Membuat keychain ganci tempel</div>
                     <div class="date-item">Hand painting</div>
                 </div>
@@ -1485,10 +1519,10 @@
             html += '<div class="heart-grid" id="heart-grid">';
 
             var images = [
-                "q7niej", "dge91f", "kb5644", "j5wtcv", "qcp1cv", "a5mtnv", "oqj0cm",
-                "qe4mkr", "c91nij", "31l2ly", "ii9j94", "o3029r", "8392rr", "ud5hmf",
-                "6w3x75", "er2igd", "41maul", "azqrgq", "rmck3r", "f1hrpj", "fupx45",
-                "rmck3r", "yfji9e", "fjn3jy", "wedr5y", "1gl9za", "ymj229"
+                "dge91f", "q7niej", "lm5rti", "zw00kv", "arnqcv", "25toqa", "76bjm2",
+                "tzzs07", "a9w6jv", "j5wtcv", "kb5644", "ii9j94", "8392rr", "morjza",
+                "x47gl6", "6jsi25", "uy72j1", "qe4mkr", "fupx45", "ymj229", "3yimnc",
+                "2s17t7", "4j5ka6", "fi20b5", "80yanz", "4zvee4", "owlel0"
             ];
 
             var classes = [
@@ -1637,7 +1671,7 @@
 
                                     var pesanManis = [
                                         "i love you more than anything! 💖",
-                                        "makasii sudah menjadi aidila septia yang berhasil ✨🤍",
+                                        "makasii sudah menjadi aidila septia yang membuat aku kagum ✨🤍",
                                         "makasii sudah menjadi aidila septia yang selalu bikin aku nyaman ✨🤍",
                                         "makasii sudah menjadi aidila septia yang sespesial itu buat aku ✨🤍",
                                         "makasii sudah menjadi aidila septia yang selalu aku banggakan ✨🤍",

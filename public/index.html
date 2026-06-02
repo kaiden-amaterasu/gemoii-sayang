@@ -2033,18 +2033,44 @@
         }
         animasi();
 
+        // ========== PERUBAHAN: MUSIK TETAP BERJALAN SAAT PINDAH TAB ==========
+        // Hapus perilaku pause saat pindah tab, biarkan musik tetap berjalan
         document.addEventListener("visibilitychange", function() {
-            if (document.hidden) {
-                if (bgm) bgm.pause();
-                if (lockBgm) lockBgm.pause();
-            } else {
-                if (musikSudahDiputar && bgm) {
-                    bgm.play().catch(function() {});
+            var bgmEl = document.getElementById("bgm");
+            var lockBgmEl = document.getElementById("lockBgm");
+            
+            // Saat kembali ke tab, pastikan musik tetap jalan jika sebelumnya sudah diputar
+            if (!document.hidden) {
+                if (musikSudahDiputar && bgmEl && bgmEl.paused) {
+                    bgmEl.play().catch(function(e) {
+                        console.log("Gagal melanjutkan musik:", e);
+                    });
                 }
-                if (lockMusicStarted && !countdownSelesai && lockBgm) {
-                    lockBgm.play().catch(function() {});
+                if (lockMusicStarted && !countdownSelesai && lockBgmEl && lockBgmEl.paused) {
+                    lockBgmEl.play().catch(function(e) {});
                 }
             }
+            // HAPUS bagian pause saat pindah tab - musik tetap berjalan!
+        });
+
+        // Deteksi pertama kali user interaksi untuk memulai audio di browser
+        document.addEventListener('click', function initAudioOnClick() {
+            var bgmEl = document.getElementById("bgm");
+            var lockBgmEl = document.getElementById("lockBgm");
+            
+            if (bgmEl && !musikSudahDiputar) {
+                bgmEl.volume = 0.45;
+                bgmEl.play().then(function() {
+                    musikSudahDiputar = true;
+                }).catch(function(e) {});
+            }
+            if (lockBgmEl && !lockMusicStarted && !countdownSelesai) {
+                lockBgmEl.volume = 0.4;
+                lockBgmEl.play().then(function() {
+                    lockMusicStarted = true;
+                }).catch(function(e) {});
+            }
+            document.removeEventListener('click', initAudioOnClick);
         });
     </script>
 </body>

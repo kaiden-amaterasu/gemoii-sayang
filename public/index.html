@@ -4,14 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     
-    <!-- ========== SEO IMPROVED ========== -->
     <title>Aidila Septia | Birthday 🎂</title>
     <meta name="description" content="Halaman spesial ulang tahun untuk Aidila Septia. Temukan pesan manis, galeri foto kenangan, surat cinta, dan kejutan interaktif di sini. Happy Birthday Aidila!">
     <meta name="keywords" content="ulang tahun aidila, aidila septia, happy birthday, ucapan ultah, pesan cinta, galeri foto">
     <meta name="author" content="Muhamad Fabian Adha">
     <meta name="theme-color" content="#ff7597">
-    <!-- ================================= -->
-    
     <link rel="icon" type="image/png" href="logo-snoopy.png">
     <link rel="canonical" href="https://aidilaap.vercel.app/">
 
@@ -300,6 +297,7 @@
             font-family: 'Coolvetica';
         }
 
+        /* ========== STYLE TIRAI BARU BERBASIS VIDEO ========== */
         #curtain-overlay {
             position: fixed;
             top: 0;
@@ -310,46 +308,30 @@
             cursor: pointer;
             overflow: hidden;
             opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-            transition: opacity 0.4s ease;
+            display: none;
+            background: black;
+            transition: opacity 0.5s ease;
         }
 
         #curtain-overlay.show {
             opacity: 1;
-            visibility: visible;
-            pointer-events: auto;
         }
 
-        .curtain-side {
-            width: 50%;
+        #curtain-video {
+            width: 100%;
             height: 100%;
-            background-image: url('https://files.catbox.moe/1dkhc8.jpg');
-            background-size: 200% 100%;
-            background-repeat: no-repeat;
-            transition: transform 1.3s cubic-bezier(0.77, 0, 0.175, 1);
+            object-fit: cover;
+            pointer-events: none;
         }
 
-        .curtain-left {
-            background-position: left center;
-        }
-
-        .curtain-right {
-            background-position: right center;
-        }
-
-        #curtain-overlay.opened .curtain-left {
-            transform: translateX(-100%);
-        }
-
-        #curtain-overlay.opened .curtain-right {
-            transform: translateX(100%);
-        }
-
-        #curtain-overlay.hidden {
+        /* SEMBUNYIKAN TOMBOL PLAY BAWAHAN BROWSER */
+        video::-webkit-media-controls-play-button,
+        video::-webkit-media-controls-start-playback-button {
             display: none !important;
+            opacity: 0 !important;
             pointer-events: none !important;
         }
+        /* ===================================================== */
 
         #main-content {
             opacity: 0;
@@ -492,46 +474,18 @@
             animation: bounce 0.6s infinite alternate;
         }
 
-        .bar:nth-child(1) {
-            height: 25px;
-            animation-delay: 0s;
-        }
-        .bar:nth-child(2) {
-            height: 45px;
-            animation-delay: 0.1s;
-        }
-        .bar:nth-child(3) {
-            height: 20px;
-            animation-delay: 0.2s;
-        }
-        .bar:nth-child(4) {
-            height: 50px;
-            animation-delay: 0.3s;
-        }
-        .bar:nth-child(5) {
-            height: 30px;
-            animation-delay: 0.4s;
-        }
-        .bar:nth-child(6) {
-            height: 40px;
-            animation-delay: 0.5s;
-        }
-        .bar:nth-child(7) {
-            height: 18px;
-            animation-delay: 0.6s;
-        }
-        .bar:nth-child(8) {
-            height: 48px;
-            animation-delay: 0.7s;
-        }
+        .bar:nth-child(1) { height: 25px; animation-delay: 0s; }
+        .bar:nth-child(2) { height: 45px; animation-delay: 0.1s; }
+        .bar:nth-child(3) { height: 20px; animation-delay: 0.2s; }
+        .bar:nth-child(4) { height: 50px; animation-delay: 0.3s; }
+        .bar:nth-child(5) { height: 30px; animation-delay: 0.4s; }
+        .bar:nth-child(6) { height: 40px; animation-delay: 0.5s; }
+        .bar:nth-child(7) { height: 18px; animation-delay: 0.6s; }
+        .bar:nth-child(8) { height: 48px; animation-delay: 0.7s; }
 
         @keyframes bounce {
-            0% {
-                height: 10px;
-            }
-            100% {
-                height: 55px;
-            }
+            0% { height: 10px; }
+            100% { height: 55px; }
         }
 
         .spotify-box {
@@ -544,7 +498,6 @@
             text-align: center;
         }
 
-        /* Style untuk judul playlist */
         .playlist-bg h4 {
             font-family: 'Coolvetica';
             font-size: 0.7rem;
@@ -562,14 +515,12 @@
             line-height: 0;
         }
 
-        /* Style untuk playlist container */
         .playlist-container {
             margin-top: 15px;
             padding-top: 10px;
             border-top: 2px dashed var(--pk-lt);
         }
 
-        /* Background untuk playlist */
         .playlist-bg {
             background: linear-gradient(135deg, rgba(255,117,151,0.15), rgba(255,158,190,0.1));
             border-radius: 20px;
@@ -605,14 +556,8 @@
         }
 
         @keyframes slideUpChat {
-            from {
-                transform: translateY(20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         .chat-header {
@@ -716,13 +661,8 @@
         }
 
         @keyframes bounceBtn {
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-8px);
-            }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
         }
 
         .flying-love {
@@ -734,18 +674,9 @@
         }
 
         @keyframes flyUp {
-            0% {
-                opacity: 1;
-                transform: translateY(0) scale(0.5) rotate(0deg);
-            }
-            50% {
-                opacity: 1;
-                transform: translateY(-80px) scale(1.2) rotate(15deg);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-150px) scale(1.5) rotate(-15deg);
-            }
+            0% { opacity: 1; transform: translateY(0) scale(0.5) rotate(0deg); }
+            50% { opacity: 1; transform: translateY(-80px) scale(1.2) rotate(15deg); }
+            100% { opacity: 0; transform: translateY(-150px) scale(1.5) rotate(-15deg); }
         }
 
         .heart-grid {
@@ -767,29 +698,18 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s;
             cursor: pointer;
-            /* FORCE semua foto ke rasio 1:1 */
             aspect-ratio: 1 / 1;
         }
 
-        /* Perbaikan khusus untuk foto 24, 25, 26 (hc-24, hc-25, hc-26) */
-        .heart-cell.hc-24,
-        .heart-cell.hc-25,
-        .heart-cell.hc-26 {
+        .heart-cell.hc-24, .heart-cell.hc-25, .heart-cell.hc-26 {
             object-fit: cover;
             object-position: center;
             aspect-ratio: 1 / 1;
         }
 
-        /* Atur posisi fokus biar ga terlalu ekstrim */
-        .heart-cell.hc-24 {
-            object-position: center 35%;
-        }
-        .heart-cell.hc-25 {
-            object-position: center 30%;
-        }
-        .heart-cell.hc-26 {
-            object-position: center 40%;
-        }
+        .heart-cell.hc-24 { object-position: center 35%; }
+        .heart-cell.hc-25 { object-position: center 30%; }
+        .heart-cell.hc-26 { object-position: center 40%; }
 
         .heart-cell:hover {
             transform: scale(1.25);
@@ -797,114 +717,33 @@
             box-shadow: 0 5px 15px rgba(255, 117, 151, 0.5);
         }
 
-        .hc-1 {
-            grid-column: 2;
-            grid-row: 1;
-        }
-        .hc-2 {
-            grid-column: 3;
-            grid-row: 1;
-        }
-        .hc-3 {
-            grid-column: 5;
-            grid-row: 1;
-        }
-        .hc-4 {
-            grid-column: 6;
-            grid-row: 1;
-        }
-        .hc-5 {
-            grid-column: 1;
-            grid-row: 2;
-        }
-        .hc-6 {
-            grid-column: 2;
-            grid-row: 2;
-        }
-        .hc-7 {
-            grid-column: 3;
-            grid-row: 2;
-        }
-        .hc-8 {
-            grid-column: 4;
-            grid-row: 2;
-        }
-        .hc-9 {
-            grid-column: 5;
-            grid-row: 2;
-        }
-        .hc-10 {
-            grid-column: 6;
-            grid-row: 2;
-        }
-        .hc-11 {
-            grid-column: 7;
-            grid-row: 2;
-        }
-        .hc-12 {
-            grid-column: 1;
-            grid-row: 3;
-        }
-        .hc-13 {
-            grid-column: 2;
-            grid-row: 3;
-        }
-        .hc-14 {
-            grid-column: 3;
-            grid-row: 3;
-        }
-        .hc-15 {
-            grid-column: 4;
-            grid-row: 3;
-        }
-        .hc-16 {
-            grid-column: 5;
-            grid-row: 3;
-        }
-        .hc-17 {
-            grid-column: 6;
-            grid-row: 3;
-        }
-        .hc-18 {
-            grid-column: 7;
-            grid-row: 3;
-        }
-        .hc-19 {
-            grid-column: 2;
-            grid-row: 4;
-        }
-        .hc-20 {
-            grid-column: 3;
-            grid-row: 4;
-        }
-        .hc-21 {
-            grid-column: 4;
-            grid-row: 4;
-        }
-        .hc-22 {
-            grid-column: 5;
-            grid-row: 4;
-        }
-        .hc-23 {
-            grid-column: 6;
-            grid-row: 4;
-        }
-        .hc-24 {
-            grid-column: 3;
-            grid-row: 5;
-        }
-        .hc-25 {
-            grid-column: 4;
-            grid-row: 5;
-        }
-        .hc-26 {
-            grid-column: 5;
-            grid-row: 5;
-        }
-        .hc-27 {
-            grid-column: 4;
-            grid-row: 6;
-        }
+        .hc-1 { grid-column: 2; grid-row: 1; }
+        .hc-2 { grid-column: 3; grid-row: 1; }
+        .hc-3 { grid-column: 5; grid-row: 1; }
+        .hc-4 { grid-column: 6; grid-row: 1; }
+        .hc-5 { grid-column: 1; grid-row: 2; }
+        .hc-6 { grid-column: 2; grid-row: 2; }
+        .hc-7 { grid-column: 3; grid-row: 2; }
+        .hc-8 { grid-column: 4; grid-row: 2; }
+        .hc-9 { grid-column: 5; grid-row: 2; }
+        .hc-10 { grid-column: 6; grid-row: 2; }
+        .hc-11 { grid-column: 7; grid-row: 2; }
+        .hc-12 { grid-column: 1; grid-row: 3; }
+        .hc-13 { grid-column: 2; grid-row: 3; }
+        .hc-14 { grid-column: 3; grid-row: 3; }
+        .hc-15 { grid-column: 4; grid-row: 3; }
+        .hc-16 { grid-column: 5; grid-row: 3; }
+        .hc-17 { grid-column: 6; grid-row: 3; }
+        .hc-18 { grid-column: 7; grid-row: 3; }
+        .hc-19 { grid-column: 2; grid-row: 4; }
+        .hc-20 { grid-column: 3; grid-row: 4; }
+        .hc-21 { grid-column: 4; grid-row: 4; }
+        .hc-22 { grid-column: 5; grid-row: 4; }
+        .hc-23 { grid-column: 6; grid-row: 4; }
+        .hc-24 { grid-column: 3; grid-row: 5; }
+        .hc-25 { grid-column: 4; grid-row: 5; }
+        .hc-26 { grid-column: 5; grid-row: 5; }
+        .hc-27 { grid-column: 4; grid-row: 6; }
 
         .wishlist-container {
             background: rgba(255, 255, 255, 0.85);
@@ -948,7 +787,6 @@
             font-size: 1.5rem;
         }
 
-        /* ========== STYLE BARU UNTUK DATE ITEM DENGAN PANAH GESER ========== */
         .date-item {
             font-family: 'Coolvetica';
             padding: 8px 0;
@@ -1030,7 +868,6 @@
             opacity: 1;
             transform: translateX(0);
         }
-        /* ========== AKHIR STYLE BARU ========== */
 
         .wishlist-note {
             font-family: 'Coolvetica';
@@ -1148,22 +985,13 @@
     </style>
 </head>
 <body>
-    <script>
-        fetch('/api/visit', { method: 'POST' });
-    </script>
-
     <div id="lock-screen" style="position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)),url('background.jpg') center/cover no-repeat;z-index:10000;display:flex;justify-content:center;align-items:center;flex-direction:column;transition:opacity 0.8s ease;">
         <div style="background:rgba(255,255,255,0.94);border-radius:40px;padding:30px 25px;max-width:400px;width:85%;text-align:center;box-shadow:0 20px 40px rgba(255,117,151,0.2);border:3px solid white;position:relative;">
             <div style="font-size:4rem;margin-bottom:10px;animation:bounceLock 1s infinite;">🔐🎂</div>
             <style>
                 @keyframes bounceLock {
-                    0%,
-                    100% {
-                        transform: translateY(0)
-                    }
-                    50% {
-                        transform: translateY(-10px)
-                    }
+                    0%, 100% { transform: translateY(0) }
+                    50% { transform: translateY(-10px) }
                 }
             </style>
 
@@ -1211,9 +1039,9 @@
     <div id="black-overlay"></div>
     <div class="bg-fixed"></div>
 
+    <!-- VIDEO TIRAI: Sudah dimodifikasi agar tanpa tombol play bawaan -->
     <div id="curtain-overlay" onclick="bukaTiraiDanPutarMusik()">
-        <div class="curtain-side curtain-left"></div>
-        <div class="curtain-side curtain-right"></div>
+        <video id="curtain-video" src="open-tirai.mp4" autoplay loop muted playsinline controlslist="noplaybackrate nodownload nofullscreen" disablePictureInPicture></video>
     </div>
 
     <div id="main-content">
@@ -1232,7 +1060,7 @@
                     <p style="color:#555;line-height:1.9;font-size:1.05rem;">
                         kaks, kamu tau gax??<br>
                         setiap kali kamu tersenyum,<br>
-                        dunia enih jadi lebih indah tau kaks karna affahh? YESS kamu benar, karna ada nya seorang aidila septia yang mempunyai senyum manis semanis gula segede alam semesta! azzekk 😭<br><br>
+                        dunia enih jadi lebih indah tau kaks karna affahh? YESS kamu benar, karna adanya seorang aidila septia yang mempunyai senyum manis semanis gula segede alam semesta! azzekk 😭<br><br>
                         <strong>Happy Birthday Kak!</strong>
                     </p>
                 </div>
@@ -1266,12 +1094,12 @@
                 <h3 style="color:#ff7597;font-family:'Cinnabar';margin-bottom:5px;">💕 — JISUNG! — 💕</h3>
                 <p style="font-size:0.7rem;color:#aaa;margin-bottom:10px;font-family:'Coolvetica';">Geser & double-tap untuk love!</p>
                 <div id="gallery-slider">
-    <div class="gallery-slide" ondblclick="galleryLove(this, event)" ontouchend="galleryLoveMobile(this, event)"><img src="—Jisung—/1-1.jpg" alt="Foto Jisung momen spesial 1"></div>
-    <div class="gallery-slide" ondblclick="galleryLove(this, event)" ontouchend="galleryLoveMobile(this, event)"><img src="—Jisung—/2-2.jpg" alt="Foto Jisung momen spesial 2"></div>
-    <div class="gallery-slide" ondblclick="galleryLove(this, event)" ontouchend="galleryLoveMobile(this, event)"><img src="—Jisung—/3-3.jpg" alt="Foto Jisung momen spesial 3"></div>
-    <div class="gallery-slide" ondblclick="galleryLove(this, event)" ontouchend="galleryLoveMobile(this, event)"><img src="—Jisung—/4-4.png" alt="Foto Jisung momen spesial 4"></div>
-    <div class="gallery-slide" ondblclick="galleryLove(this, event)" ontouchend="galleryLoveMobile(this, event)"><img src="—Jisung—/5-5.jpg" alt="Foto Jisung momen spesial 5"></div>
-</div>
+                    <div class="gallery-slide" ondblclick="galleryLove(this, event)" ontouchend="galleryLoveMobile(this, event)"><img src="—Jisung—/1-1.jpg" alt="Foto Jisung momen spesial 1"></div>
+                    <div class="gallery-slide" ondblclick="galleryLove(this, event)" ontouchend="galleryLoveMobile(this, event)"><img src="—Jisung—/2-2.jpg" alt="Foto Jisung momen spesial 2"></div>
+                    <div class="gallery-slide" ondblclick="galleryLove(this, event)" ontouchend="galleryLoveMobile(this, event)"><img src="—Jisung—/3-3.jpg" alt="Foto Jisung momen spesial 3"></div>
+                    <div class="gallery-slide" ondblclick="galleryLove(this, event)" ontouchend="galleryLoveMobile(this, event)"><img src="—Jisung—/4-4.png" alt="Foto Jisung momen spesial 4"></div>
+                    <div class="gallery-slide" ondblclick="galleryLove(this, event)" ontouchend="galleryLoveMobile(this, event)"><img src="—Jisung—/5-5.jpg" alt="Foto Jisung momen spesial 5"></div>
+                </div>
                 <button style="background:#ff7597;color:white;border:none;padding:12px 30px;border-radius:15px;font-weight:bold;margin-top:15px;cursor:pointer;font-family:Arial;" onclick="document.getElementById('easter-gallery-overlay').style.display='none'">Tutup</button>
             </div>
         </div>
@@ -1315,8 +1143,6 @@
                     <div class="spotify-track">
                         <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/0jXwHMNDzsq2skoV5mgxRE?utm_source=generator" width="100%" height="80" frameborder="0" allow="autoplay;clipboard-write;encrypted-media;fullscreen;picture-in-picture" loading="lazy" title="Spotify lagu kenangan untuk Aidila"></iframe>
                     </div>
-                    
-                    <!-- PLAYLIST SPOTIFY BARU DENGAN LATAR BELAKANG -->
                     <div class="playlist-container">
                         <div class="playlist-bg">
                             <h4>— lots of your memories in this playlist aidila —</h4>
@@ -1348,7 +1174,6 @@
             <h3>-! LIST DATe BeRSAMA SAMWAN !-</h3>
             <button class="btn-wishlist" onclick="document.getElementById('wishlist-pin-overlay').style.display='flex'">✨ Buka List Date ✨</button>
             <div id="wishlist-form" style="display:none">
-                <!-- 12 SEPTEMBER -->
                 <div class="date-card">
                     <div class="date-title"><span>📆</span> 12 SEPTEMBER</div>
                     <div class="date-item" data-jam="11.00 - 12.30 WIB">
@@ -1380,7 +1205,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- 13 SEPTEMBER -->
                 <div class="date-card">
                     <div class="date-title"><span>📆</span> 13 SEPTEMBER</div>
                     <div class="date-item" data-jam="14.30 - 15.00 WIB">
@@ -1413,7 +1237,7 @@
             </div>
         </div>
 
-        <footer>&copy; 2026 Muhamad Fabian Adha. All Rights Reserved</footer>
+        <footer>© 2026 Muhamad Fabian Adha. All Rights Reserved</footer>
 
         <audio id="bgm" loop preload="auto">
             <source src="bgm.mp3" type="audio/mpeg">
@@ -1424,7 +1248,7 @@
         var NOMOR_WA = "6285811162305";
         var lockBgm = document.getElementById("lockBgm");
         var lockMusicStarted = false;
-        var targetWaktu = new Date("September 10, 2026 00:00:00").getTime();
+        var targetWaktu = new Date("Juni 3, 2026 23:17:00").getTime();
         var lockScreen = document.getElementById("lock-screen");
         var blackOverlay = document.getElementById("black-overlay");
         var countdownSelesai = false;
@@ -1432,28 +1256,21 @@
         var musikSudahDiputar = false;
         var sudahMengetik = false;
 
-        // ========== FITUR PANAH GESER UNTUK MENAMPILKAN JAM ==========
         function toggleJam(arrowBtn) {
             var itemRight = arrowBtn.parentElement;
             var timeText = itemRight.querySelector('.time-text');
             
             if (timeText.classList.contains('show')) {
-                // Tutup jam: panah kembali ke posisi semula
                 arrowBtn.classList.remove('slide-left');
                 timeText.classList.remove('show');
-                // Ubah panah kembali ke ">"
                 arrowBtn.innerHTML = '>';
             } else {
-                // Buka jam: panah bergeser ke kiri
                 arrowBtn.classList.add('slide-left');
                 timeText.classList.add('show');
-                // Ubah panah menjadi "<" sebagai indikator
                 arrowBtn.innerHTML = '<';
             }
         }
-        // ========== AKHIR FITUR PANAH GESER ==========
 
-        // ========== FITUR: MUSIK LANJUT OTOMATIS SAAT KEMBALI KE TAB ==========
         var musikTerakhirDiputar = false;
         var lockMusikTerakhirDiputar = false;
         var waktuTerakhirMusik = 0;
@@ -1480,7 +1297,8 @@
             var bgmEl = document.getElementById("bgm");
             var lockBgmEl = document.getElementById("lockBgm");
             var curtain = document.getElementById("curtain-overlay");
-            var isCurtainOpened = curtain && curtain.classList.contains("opened");
+            // Karena kita ganti tirai, kita cek kondisinya ngga ada class "opening"
+            var isCurtainOpened = curtain && curtain.classList.contains("opening");
             
             if (bgmEl && musikTerakhirDiputar && isCurtainOpened && !document.hidden) {
                 bgmEl.currentTime = waktuTerakhirMusik;
@@ -1520,7 +1338,6 @@
             if (bgmEl && !bgmEl.paused) bgmEl.pause();
             if (lockBgmEl && !lockBgmEl.paused) lockBgmEl.pause();
         });
-        // ========== AKHIR PERUBAHAN ==========
 
         var teksSurat =
             "aidila septiaa\n\n" +
@@ -1573,6 +1390,7 @@
             }).catch(function() {});
         }
 
+        // ========== LOGIKA COUNTDOWN UNTUK MUNCULIN TIRAI VIDEO ==========
         function updateCountdownLock() {
             var sekarang = Date.now();
             var jarak = targetWaktu - sekarang;
@@ -1587,8 +1405,16 @@
 
                     var curtain = document.getElementById("curtain-overlay");
                     if (curtain) {
-                        curtain.style.display = "flex";
-                        curtain.classList.add("show");
+                        // Tampilkan overlay dengan display block
+                        curtain.style.display = "block";
+                        
+                        // Tunggu sebentar biar CSS mendaftarkan display block sebelum transisi opacity (fade-in 0.5s)
+                        setTimeout(function() {
+                            curtain.classList.add("show"); 
+                            // Pastikan video mp4 berjalan
+                            var vid = document.getElementById("curtain-video");
+                            if (vid) vid.play().catch(function(){});
+                        }, 50);
                     }
 
                     lockScreen.style.opacity = "0";
@@ -1597,7 +1423,6 @@
                         lockScreen.style.display = "none";
                     }, 800);
 
-                    if (blackOverlay) blackOverlay.classList.add("fade-out");
                     countdownSelesai = true;
                 }
                 document.getElementById("lockDays").innerText = "00";
@@ -1633,9 +1458,13 @@
             });
         }
 
+        // ========== FUNGSI BUKA TIRAI (MEMAINKAN CLOSE-TIRAI.MP4 & FADE OUT) ==========
         function bukaTiraiDanPutarMusik() {
             var curtain = document.getElementById("curtain-overlay");
-            if (!curtain || curtain.classList.contains("opened")) return;
+            var vid = document.getElementById("curtain-video");
+
+            if (!curtain || curtain.classList.contains("opening")) return;
+            curtain.classList.add("opening"); // Hindari di-klik berulang kali
 
             if (lockBgm) {
                 lockBgm.pause();
@@ -1644,19 +1473,38 @@
             }
 
             document.body.classList.add("bg-show");
-
+            
             var overlay = document.getElementById("black-overlay");
             if (overlay) overlay.classList.add("fade-out");
 
             document.getElementById("main-content").classList.add("show-content");
             putarMusik();
 
-            curtain.classList.add("opened");
-            setTimeout(function() {
-                curtain.classList.add("hidden");
-                if (overlay) overlay.style.display = "none";
-            }, 1300);
+            // Ubah video menjadi animasi tutup tirai, dengan atribut bebas tombol play
+            vid.src = "close-tirai.mp4";
+            vid.loop = false;
+            // Pastikan atribut controlsList tetap ada agar tidak muncul tombol play
+            vid.setAttribute("controlslist", "noplaybackrate nodownload nofullscreen");
+            vid.disablePictureInPicture = true;
+            
+            vid.play().catch(function(e) { console.log(e); });
+
+            // Fungsi untuk fade-out
+            function fadeOutCurtain() {
+                curtain.style.opacity = "0"; // Fade-out berjalan 0.5s via CSS
+                setTimeout(function() {
+                    curtain.classList.remove("show");
+                    curtain.style.display = "none";
+                    if (overlay) overlay.style.display = "none";
+                }, 500);
+            }
+
+            // Memicu fade-out persis saat video selesai diputar
+            vid.onended = fadeOutCurtain;
+            // Backup jika onended tidak jalan di beberapa device
+            vid.onerror = fadeOutCurtain; 
         }
+        // =================================================================================
 
         function mulaiMengetik() {
             var textEl = document.getElementById("typing-text");
@@ -1717,7 +1565,6 @@
             var html = '<p>Double-tap foto untuk love!</p>';
             html += '<div class="heart-grid" id="heart-grid">';
 
-            // GANTI: menggunakan file lokal 1.jpg - 27.jpg dari folder moment-aidila
             var images = [];
             for (var i = 1; i <= 27; i++) {
                 images.push(i);
@@ -2104,55 +1951,6 @@
             })(pinIdx);
         }
 
-        function ambilSelfie() {
-            document.getElementById("selfie-input").click();
-        }
-
-        function handleSelfie(e) {
-            var file = e.target.files[0];
-            if (!file) return;
-
-            document.getElementById("clue-selfie-overlay").style.display = "none";
-
-            var pesanText = "Pabiann! 📸✨\n\naku baru foto selfie niee buat buka clue!";
-
-            if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-                navigator.share({
-                    title: 'Selfie for Clue',
-                    text: pesanText,
-                    files: [file]
-                }).catch(function(error) {
-                    fallbackShareImage(file, pesanText);
-                });
-            } else {
-                fallbackShareImage(file, pesanText);
-            }
-
-            setTimeout(function() {
-                document.getElementById("clue-reveal-overlay").style.display = "flex";
-                for (var i = 0; i < 15; i++) {
-                    setTimeout(function() {
-                        buatBurst(
-                            window.innerWidth / 2 + (Math.random() - 0.5) * 300,
-                            window.innerHeight / 2 + (Math.random() - 0.5) * 200
-                        );
-                    }, i * 70);
-                }
-            }, 2000);
-        }
-
-        function fallbackShareImage(file, pesanText) {
-            var reader = new FileReader();
-            reader.onload = function(evt) {
-                var base64 = evt.target.result.split(',')[1];
-                var url = "https://wa.me/" + NOMOR_WA + "?text=" + encodeURIComponent(pesanText + "\n\n*Gambar terlampir:* " + file.name);
-                window.open(url, "_blank");
-            };
-            reader.readAsDataURL(file);
-        }
-
-        document.getElementById("selfie-input").addEventListener("change", handleSelfie);
-
         function kirimKeWA(pesan) {
             var text = encodeURIComponent(pesan + " makasii yaa!");
             var url = "https://wa.me/" + NOMOR_WA + "?text=" + text;
@@ -2231,7 +2029,6 @@
         }
         animasi();
 
-        // Deteksi pertama kali user interaksi untuk memulai audio di browser
         document.addEventListener('click', function initAudioOnClick() {
             var bgmEl = document.getElementById("bgm");
             var lockBgmEl = document.getElementById("lockBgm");

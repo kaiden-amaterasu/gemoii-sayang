@@ -11,6 +11,8 @@
     <meta name="theme-color" content="#ff7597">
     <link rel="icon" type="image/png" href="logo-snoopy.png">
     <link rel="canonical" href="https://aidilaap.vercel.app/">
+    <link rel="preload" as="video" href="open-tirai.mp4">
+    <link rel="preload" as="video" href="close-tirai.mp4">
 
     <style>
         /* === SEMUA STYLE ASLI TIDAK BERUBAH === */
@@ -310,7 +312,7 @@
             opacity: 0;
             display: none;
             background: black;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.2s ease;
         }
 
         #curtain-overlay.show {
@@ -1251,6 +1253,11 @@
     </div>
 
     <script>
+        // Preload manual pakai JS
+var preloadClose = document.createElement("video");
+preloadClose.src = "close-tirai.mp4";
+preloadClose.preload = "auto";
+preloadClose.load();
         var NOMOR_WA = "6285811162305";
         var lockBgm = document.getElementById("lockBgm");
         var lockMusicStarted = false;

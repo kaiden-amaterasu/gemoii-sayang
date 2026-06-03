@@ -297,7 +297,7 @@
             font-family: 'Coolvetica';
         }
 
-        /* ========== STYLE TIRAI BARU BERBASIS VIDEO ========== */
+        /* ========== STYLE TIRAI DENGAN 2 VIDEO ========== */
         #curtain-overlay {
             position: fixed;
             top: 0;
@@ -317,11 +317,16 @@
             opacity: 1;
         }
 
-        #curtain-video {
+        #curtain-video-open,
+        #curtain-video-close {
             width: 100%;
             height: 100%;
             object-fit: cover;
             pointer-events: none;
+        }
+
+        #curtain-video-close {
+            display: none;
         }
 
         /* SEMBUNYIKAN TOMBOL PLAY BAWAHAN BROWSER */
@@ -1039,9 +1044,10 @@
     <div id="black-overlay"></div>
     <div class="bg-fixed"></div>
 
-    <!-- VIDEO TIRAI: Sudah dimodifikasi agar tanpa tombol play bawaan -->
+    <!-- TIRAI DENGAN 2 VIDEO TERPISAH (OPEN & CLOSE) -->
     <div id="curtain-overlay" onclick="bukaTiraiDanPutarMusik()">
-        <video id="curtain-video" src="open-tirai.mp4" autoplay loop muted playsinline controlslist="noplaybackrate nodownload nofullscreen" disablePictureInPicture></video>
+        <video id="curtain-video-open" src="open-tirai.mp4" autoplay loop muted playsinline controlslist="noplaybackrate nodownload nofullscreen" disablePictureInPicture></video>
+        <video id="curtain-video-close" src="close-tirai.mp4" muted playsinline controlslist="noplaybackrate nodownload nofullscreen" disablePictureInPicture></video>
     </div>
 
     <div id="main-content">
@@ -1248,7 +1254,7 @@
         var NOMOR_WA = "6285811162305";
         var lockBgm = document.getElementById("lockBgm");
         var lockMusicStarted = false;
-        var targetWaktu = new Date("Juni 3, 2026 23:46:00").getTime();
+        var targetWaktu = new Date("Juni 3, 2026 22:49:00").getTime();
         var lockScreen = document.getElementById("lock-screen");
         var blackOverlay = document.getElementById("black-overlay");
         var countdownSelesai = false;
@@ -1297,7 +1303,6 @@
             var bgmEl = document.getElementById("bgm");
             var lockBgmEl = document.getElementById("lockBgm");
             var curtain = document.getElementById("curtain-overlay");
-            // Karena kita ganti tirai, kita cek kondisinya ngga ada class "opening"
             var isCurtainOpened = curtain && curtain.classList.contains("opening");
             
             if (bgmEl && musikTerakhirDiputar && isCurtainOpened && !document.hidden) {
@@ -1390,7 +1395,7 @@
             }).catch(function() {});
         }
 
-        // ========== LOGIKA COUNTDOWN UNTUK MUNCULIN TIRAI VIDEO ==========
+        // COUNTDOWN
         function updateCountdownLock() {
             var sekarang = Date.now();
             var jarak = targetWaktu - sekarang;
@@ -1405,14 +1410,10 @@
 
                     var curtain = document.getElementById("curtain-overlay");
                     if (curtain) {
-                        // Tampilkan overlay dengan display block
                         curtain.style.display = "block";
-                        
-                        // Tunggu sebentar biar CSS mendaftarkan display block sebelum transisi opacity (fade-in 0.5s)
                         setTimeout(function() {
-                            curtain.classList.add("show"); 
-                            // Pastikan video mp4 berjalan
-                            var vid = document.getElementById("curtain-video");
+                            curtain.classList.add("show");
+                            var vid = document.getElementById("curtain-video-open");
                             if (vid) vid.play().catch(function(){});
                         }, 50);
                     }
@@ -1446,87 +1447,62 @@
         }
         updateCountdownLock();
 
-        function putarMusik() {
-            if (musikSudahDiputar) return;
-            if (!bgm) return;
-            bgm.volume = 0.45;
-            bgm.load();
-            bgm.play().then(function() {
-                musikSudahDiputar = true;
-            }).catch(function() {
-                setTimeout(putarMusik, 1000);
-            });
-        }
-
-        // ========== FUNGSI BUKA TIRAI (MEMAINKAN CLOSE-TIRAI.MP4 & FADE OUT) ==========
+        // FUNGSI BUKA TIRAI DENGAN 2 VIDEO (INSTAN, TANPA HITAM)
         function bukaTiraiDanPutarMusik() {
-    var curtain = document.getElementById("curtain-overlay");
-    var vid = document.getElementById("curtain-video");
+            var curtain = document.getElementById("curtain-overlay");
+            var videoOpen = document.getElementById("curtain-video-open");
+            var videoClose = document.getElementById("curtain-video-close");
 
-    if (!curtain || curtain.classList.contains("opening")) return;
-    curtain.classList.add("opening");
+            if (!curtain || curtain.classList.contains("opening")) return;
+            curtain.classList.add("opening");
 
-    if (lockBgm) {
-        lockBgm.pause();
-        lockBgm.currentTime = 0;
-        lockBgm.volume = 0;
-    }
-
-    document.body.classList.add("bg-show");
-    
-    var overlay = document.getElementById("black-overlay");
-    if (overlay) overlay.classList.add("fade-out");
-
-    document.getElementById("main-content").classList.add("show-content");
-
-    // HAPUS atau KOMENTAR baris ini:
-    // putarMusik();  ← JANGAN panggil di sini!
-
-    // Ubah video menjadi close-tirai.mp4
-    vid.src = "close-tirai.mp4";
-    vid.loop = false;
-    vid.setAttribute("controlslist", "noplaybackrate nodownload nofullscreen");
-    vid.disablePictureInPicture = true;
-    
-    vid.play().catch(function(e) { console.log(e); });
-
-    // MULAI BGM PERSIS SAAT VIDEO close-tirai.mp4 MULAI DIPUTAR
-    function mulaiBgm() {
-        if (!musikSudahDiputar) {
-            var bgmEl = document.getElementById("bgm");
-            if (bgmEl) {
-                bgmEl.volume = 0.45;
-                bgmEl.play().then(function() {
-                    musikSudahDiputar = true;
-                    console.log("BGM mulai diputar");
-                }).catch(function(e) {
-                    console.log("Gagal play BGM:", e);
-                });
+            if (lockBgm) {
+                lockBgm.pause();
+                lockBgm.currentTime = 0;
+                lockBgm.volume = 0;
             }
+
+            document.body.classList.add("bg-show");
+            var overlay = document.getElementById("black-overlay");
+            if (overlay) overlay.classList.add("fade-out");
+
+            document.getElementById("main-content").classList.add("show-content");
+
+            // INSTAN: sembunyikan video open, tampilkan video close
+            videoOpen.style.display = "none";
+            videoClose.style.display = "block";
+            videoClose.play().catch(function(e) { console.log(e); });
+
+            // Mulai BGM saat video close diputar
+            function mulaiBgm() {
+                if (!musikSudahDiputar) {
+                    var bgmEl = document.getElementById("bgm");
+                    if (bgmEl) {
+                        bgmEl.volume = 0.45;
+                        bgmEl.play().then(function() {
+                            musikSudahDiputar = true;
+                        }).catch(function(e) {});
+                    }
+                }
+            }
+
+            videoClose.onplay = function() {
+                mulaiBgm();
+            };
+            setTimeout(mulaiBgm, 100);
+
+            function fadeOutCurtain() {
+                curtain.style.opacity = "0";
+                setTimeout(function() {
+                    curtain.classList.remove("show");
+                    curtain.style.display = "none";
+                    if (overlay) overlay.style.display = "none";
+                }, 500);
+            }
+
+            videoClose.onended = fadeOutCurtain;
+            videoClose.onerror = fadeOutCurtain;
         }
-    }
-
-    // Jalankan BGM saat video mulai berjalan (bisa via event atau sedikit delay)
-    vid.onplay = function() {
-        mulaiBgm();
-    };
-    
-    // Backup: kalau onplay tidak terdeteksi, jalankan setelah 100ms
-    setTimeout(mulaiBgm, 100);
-
-    function fadeOutCurtain() {
-        curtain.style.opacity = "0";
-        setTimeout(function() {
-            curtain.classList.remove("show");
-            curtain.style.display = "none";
-            if (overlay) overlay.style.display = "none";
-        }, 500);
-    }
-
-    vid.onended = fadeOutCurtain;
-    vid.onerror = fadeOutCurtain;
-}
-        // =================================================================================
 
         function mulaiMengetik() {
             var textEl = document.getElementById("typing-text");
@@ -2051,22 +2027,22 @@
         }
         animasi();
 
+        // EVENT CLICK UNTUK MEMULAI MUSIK COUNTDOWN (TAPI TIDAK UNTUK BGM)
         document.addEventListener('click', function initAudioOnClick() {
-    var lockBgmEl = document.getElementById("lockBgm");
-    
-    // Hanya play lockBgm (musik countdown) jika countdown BELUM selesai
-    if (lockBgmEl && !lockMusicStarted && !countdownSelesai) {
-        lockBgmEl.volume = 0.4;
-        lockBgmEl.play().then(function() {
-            lockMusicStarted = true;
-        }).catch(function(e) {});
-    }
-    
-    // HAPUS bagian yang memutar bgm di sini!
-    // bgm.mp3 SEKARANG hanya diputar di fungsi bukaTiraiDanPutarMusik()
-    
-    document.removeEventListener('click', initAudioOnClick);
-});
+            var lockBgmEl = document.getElementById("lockBgm");
+            
+            // Hanya play lockBgm (musik countdown) jika countdown BELUM selesai
+            if (lockBgmEl && !lockMusicStarted && !countdownSelesai) {
+                lockBgmEl.volume = 0.4;
+                lockBgmEl.play().then(function() {
+                    lockMusicStarted = true;
+                }).catch(function(e) {});
+            }
+            
+            // BGM tidak dimulai di sini! BGM hanya dimulai di fungsi bukaTiraiDanPutarMusik()
+            
+            document.removeEventListener('click', initAudioOnClick);
+        });
     </script>
 </body>
 </html>

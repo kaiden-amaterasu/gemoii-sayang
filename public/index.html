@@ -948,14 +948,16 @@
             font-size: 1.5rem;
         }
 
+        /* ========== STYLE BARU UNTUK DATE ITEM DENGAN PANAH GESER ========== */
         .date-item {
             font-family: 'Coolvetica';
-            padding: 8px 0 8px 25px;
+            padding: 8px 0;
             color: #555;
             font-size: 0.95rem;
             border-bottom: 1px dashed #ffe3ec;
             display: flex;
             align-items: center;
+            justify-content: space-between;
             gap: 10px;
         }
 
@@ -963,10 +965,72 @@
             border-bottom: none;
         }
 
-        .date-item::before {
+        .item-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .item-left::before {
             content: "🎀";
             font-size: 0.9rem;
         }
+
+        .item-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .arrow-btn {
+            background: #ff7597;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(255, 117, 151, 0.4);
+            flex-shrink: 0;
+        }
+
+        .arrow-btn:hover {
+            background: #ff5a80;
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(255, 117, 151, 0.6);
+        }
+
+        .arrow-btn.slide-left {
+            transform: translateX(-20px);
+            opacity: 0.7;
+        }
+
+        .time-text {
+            font-family: 'NexaHeavy';
+            font-size: 0.85rem;
+            color: #ff7597;
+            background: #ffe3ec;
+            padding: 4px 10px;
+            border-radius: 20px;
+            white-space: nowrap;
+            opacity: 0;
+            transform: translateX(10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .time-text.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        /* ========== AKHIR STYLE BARU ========== */
 
         .wishlist-note {
             font-family: 'Coolvetica';
@@ -1284,17 +1348,62 @@
             <h3>-! LIST DATe BeRSAMA SAMWAN !-</h3>
             <button class="btn-wishlist" onclick="document.getElementById('wishlist-pin-overlay').style.display='flex'">✨ Buka List Date ✨</button>
             <div id="wishlist-form" style="display:none">
+                <!-- 12 SEPTEMBER -->
                 <div class="date-card">
                     <div class="date-title"><span>📆</span> 12 SEPTEMBER</div>
-                    <div class="date-item">Photo box</div>
-                    <div class="date-item">Nonton bioskop</div>
-                    <div class="date-item">Main Playground</div>
+                    <div class="date-item" data-jam="11.00 - 12.30 WIB">
+                        <div class="item-left">Makan bareng</div>
+                        <div class="item-right">
+                            <span class="time-text">11.00 - 12.30 WIB</span>
+                            <div class="arrow-btn" onclick="toggleJam(this)">></div>
+                        </div>
+                    </div>
+                    <div class="date-item" data-jam="12.30 - 13.00 WIB">
+                        <div class="item-left">Photo booth</div>
+                        <div class="item-right">
+                            <span class="time-text">12.30 - 13.00 WIB</span>
+                            <div class="arrow-btn" onclick="toggleJam(this)">></div>
+                        </div>
+                    </div>
+                    <div class="date-item" data-jam="14.30 - 15.30 WIB">
+                        <div class="item-left">Nonton bioskop</div>
+                        <div class="item-right">
+                            <span class="time-text">14.30 - 15.30 WIB</span>
+                            <div class="arrow-btn" onclick="toggleJam(this)">></div>
+                        </div>
+                    </div>
+                    <div class="date-item" data-jam="15.40 - 17.35 WIB">
+                        <div class="item-left">Main playground</div>
+                        <div class="item-right">
+                            <span class="time-text">15.40 - 17.35 WIB</span>
+                            <div class="arrow-btn" onclick="toggleJam(this)">></div>
+                        </div>
+                    </div>
                 </div>
+                <!-- 13 SEPTEMBER -->
                 <div class="date-card">
                     <div class="date-title"><span>📆</span> 13 SEPTEMBER</div>
-                    <div class="date-item">Joging sore</div>
-                    <div class="date-item">Membuat keychain ganci tempel</div>
-                    <div class="date-item">Hand painting</div>
+                    <div class="date-item" data-jam="14.30 - 15.00 WIB">
+                        <div class="item-left">Joging sore</div>
+                        <div class="item-right">
+                            <span class="time-text">14.30 - 15.00 WIB</span>
+                            <div class="arrow-btn" onclick="toggleJam(this)">></div>
+                        </div>
+                    </div>
+                    <div class="date-item" data-jam="15.15 - 16.00 WIB">
+                        <div class="item-left">Membuat keychain ganci tempel</div>
+                        <div class="item-right">
+                            <span class="time-text">15.15 - 16.00 WIB</span>
+                            <div class="arrow-btn" onclick="toggleJam(this)">></div>
+                        </div>
+                    </div>
+                    <div class="date-item" data-jam="16.00 - 16.30 WIB">
+                        <div class="item-left">Hand painting</div>
+                        <div class="item-right">
+                            <span class="time-text">16.00 - 16.30 WIB</span>
+                            <div class="arrow-btn" onclick="toggleJam(this)">></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="wishlist-note">💝 special date for you! 💝</div>
                 <div class="response-buttons">
@@ -1322,6 +1431,96 @@
         var bgm = document.getElementById("bgm");
         var musikSudahDiputar = false;
         var sudahMengetik = false;
+
+        // ========== FITUR PANAH GESER UNTUK MENAMPILKAN JAM ==========
+        function toggleJam(arrowBtn) {
+            var itemRight = arrowBtn.parentElement;
+            var timeText = itemRight.querySelector('.time-text');
+            
+            if (timeText.classList.contains('show')) {
+                // Tutup jam: panah kembali ke posisi semula
+                arrowBtn.classList.remove('slide-left');
+                timeText.classList.remove('show');
+                // Ubah panah kembali ke ">"
+                arrowBtn.innerHTML = '>';
+            } else {
+                // Buka jam: panah bergeser ke kiri
+                arrowBtn.classList.add('slide-left');
+                timeText.classList.add('show');
+                // Ubah panah menjadi "<" sebagai indikator
+                arrowBtn.innerHTML = '<';
+            }
+        }
+        // ========== AKHIR FITUR PANAH GESER ==========
+
+        // ========== FITUR: MUSIK LANJUT OTOMATIS SAAT KEMBALI KE TAB ==========
+        var musikTerakhirDiputar = false;
+        var lockMusikTerakhirDiputar = false;
+        var waktuTerakhirMusik = 0;
+        var waktuTerakhirLockMusik = 0;
+
+        function pauseDanSimpanMusik() {
+            var bgmEl = document.getElementById("bgm");
+            var lockBgmEl = document.getElementById("lockBgm");
+            
+            if (bgmEl && !bgmEl.paused) {
+                waktuTerakhirMusik = bgmEl.currentTime;
+                bgmEl.pause();
+                musikTerakhirDiputar = true;
+            }
+            
+            if (lockBgmEl && !lockBgmEl.paused) {
+                waktuTerakhirLockMusik = lockBgmEl.currentTime;
+                lockBgmEl.pause();
+                lockMusikTerakhirDiputar = true;
+            }
+        }
+
+        function lanjutkanMusik() {
+            var bgmEl = document.getElementById("bgm");
+            var lockBgmEl = document.getElementById("lockBgm");
+            var curtain = document.getElementById("curtain-overlay");
+            var isCurtainOpened = curtain && curtain.classList.contains("opened");
+            
+            if (bgmEl && musikTerakhirDiputar && isCurtainOpened && !document.hidden) {
+                bgmEl.currentTime = waktuTerakhirMusik;
+                bgmEl.play().then(function() {
+                    musikSudahDiputar = true;
+                }).catch(function(e) {
+                    console.log("Gagal melanjutkan musik:", e);
+                });
+            }
+            
+            if (lockBgmEl && lockMusikTerakhirDiputar && !countdownSelesai && !document.hidden) {
+                lockBgmEl.currentTime = waktuTerakhirLockMusik;
+                lockBgmEl.play().then(function() {
+                    lockMusicStarted = true;
+                }).catch(function(e) {});
+            }
+        }
+
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                pauseDanSimpanMusik();
+            } else {
+                setTimeout(lanjutkanMusik, 100);
+            }
+        });
+
+        window.addEventListener("beforeunload", function() {
+            var bgmEl = document.getElementById("bgm");
+            var lockBgmEl = document.getElementById("lockBgm");
+            if (bgmEl && !bgmEl.paused) bgmEl.pause();
+            if (lockBgmEl && !lockBgmEl.paused) lockBgmEl.pause();
+        });
+        
+        window.addEventListener("pagehide", function() {
+            var bgmEl = document.getElementById("bgm");
+            var lockBgmEl = document.getElementById("lockBgm");
+            if (bgmEl && !bgmEl.paused) bgmEl.pause();
+            if (lockBgmEl && !lockBgmEl.paused) lockBgmEl.pause();
+        });
+        // ========== AKHIR PERUBAHAN ==========
 
         var teksSurat =
             "aidila septiaa\n\n" +
@@ -2032,26 +2231,6 @@
             requestAnimationFrame(animasi);
         }
         animasi();
-
-        // ========== PERUBAHAN: MUSIK TETAP BERJALAN SAAT PINDAH TAB ==========
-        // Hapus perilaku pause saat pindah tab, biarkan musik tetap berjalan
-        document.addEventListener("visibilitychange", function() {
-            var bgmEl = document.getElementById("bgm");
-            var lockBgmEl = document.getElementById("lockBgm");
-            
-            // Saat kembali ke tab, pastikan musik tetap jalan jika sebelumnya sudah diputar
-            if (!document.hidden) {
-                if (musikSudahDiputar && bgmEl && bgmEl.paused) {
-                    bgmEl.play().catch(function(e) {
-                        console.log("Gagal melanjutkan musik:", e);
-                    });
-                }
-                if (lockMusicStarted && !countdownSelesai && lockBgmEl && lockBgmEl.paused) {
-                    lockBgmEl.play().catch(function(e) {});
-                }
-            }
-            // HAPUS bagian pause saat pindah tab - musik tetap berjalan!
-        });
 
         // Deteksi pertama kali user interaksi untuk memulai audio di browser
         document.addEventListener('click', function initAudioOnClick() {

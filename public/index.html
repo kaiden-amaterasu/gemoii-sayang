@@ -1460,50 +1460,72 @@
 
         // ========== FUNGSI BUKA TIRAI (MEMAINKAN CLOSE-TIRAI.MP4 & FADE OUT) ==========
         function bukaTiraiDanPutarMusik() {
-            var curtain = document.getElementById("curtain-overlay");
-            var vid = document.getElementById("curtain-video");
+    var curtain = document.getElementById("curtain-overlay");
+    var vid = document.getElementById("curtain-video");
 
-            if (!curtain || curtain.classList.contains("opening")) return;
-            curtain.classList.add("opening"); // Hindari di-klik berulang kali
+    if (!curtain || curtain.classList.contains("opening")) return;
+    curtain.classList.add("opening");
 
-            if (lockBgm) {
-                lockBgm.pause();
-                lockBgm.currentTime = 0;
-                lockBgm.volume = 0;
+    if (lockBgm) {
+        lockBgm.pause();
+        lockBgm.currentTime = 0;
+        lockBgm.volume = 0;
+    }
+
+    document.body.classList.add("bg-show");
+    
+    var overlay = document.getElementById("black-overlay");
+    if (overlay) overlay.classList.add("fade-out");
+
+    document.getElementById("main-content").classList.add("show-content");
+
+    // HAPUS atau KOMENTAR baris ini:
+    // putarMusik();  ← JANGAN panggil di sini!
+
+    // Ubah video menjadi close-tirai.mp4
+    vid.src = "close-tirai.mp4";
+    vid.loop = false;
+    vid.setAttribute("controlslist", "noplaybackrate nodownload nofullscreen");
+    vid.disablePictureInPicture = true;
+    
+    vid.play().catch(function(e) { console.log(e); });
+
+    // MULAI BGM PERSIS SAAT VIDEO close-tirai.mp4 MULAI DIPUTAR
+    function mulaiBgm() {
+        if (!musikSudahDiputar) {
+            var bgmEl = document.getElementById("bgm");
+            if (bgmEl) {
+                bgmEl.volume = 0.45;
+                bgmEl.play().then(function() {
+                    musikSudahDiputar = true;
+                    console.log("BGM mulai diputar");
+                }).catch(function(e) {
+                    console.log("Gagal play BGM:", e);
+                });
             }
-
-            document.body.classList.add("bg-show");
-            
-            var overlay = document.getElementById("black-overlay");
-            if (overlay) overlay.classList.add("fade-out");
-
-            document.getElementById("main-content").classList.add("show-content");
-            putarMusik();
-
-            // Ubah video menjadi animasi tutup tirai, dengan atribut bebas tombol play
-            vid.src = "close-tirai.mp4";
-            vid.loop = false;
-            // Pastikan atribut controlsList tetap ada agar tidak muncul tombol play
-            vid.setAttribute("controlslist", "noplaybackrate nodownload nofullscreen");
-            vid.disablePictureInPicture = true;
-            
-            vid.play().catch(function(e) { console.log(e); });
-
-            // Fungsi untuk fade-out
-            function fadeOutCurtain() {
-                curtain.style.opacity = "0"; // Fade-out berjalan 0.5s via CSS
-                setTimeout(function() {
-                    curtain.classList.remove("show");
-                    curtain.style.display = "none";
-                    if (overlay) overlay.style.display = "none";
-                }, 500);
-            }
-
-            // Memicu fade-out persis saat video selesai diputar
-            vid.onended = fadeOutCurtain;
-            // Backup jika onended tidak jalan di beberapa device
-            vid.onerror = fadeOutCurtain; 
         }
+    }
+
+    // Jalankan BGM saat video mulai berjalan (bisa via event atau sedikit delay)
+    vid.onplay = function() {
+        mulaiBgm();
+    };
+    
+    // Backup: kalau onplay tidak terdeteksi, jalankan setelah 100ms
+    setTimeout(mulaiBgm, 100);
+
+    function fadeOutCurtain() {
+        curtain.style.opacity = "0";
+        setTimeout(function() {
+            curtain.classList.remove("show");
+            curtain.style.display = "none";
+            if (overlay) overlay.style.display = "none";
+        }, 500);
+    }
+
+    vid.onended = fadeOutCurtain;
+    vid.onerror = fadeOutCurtain;
+}
         // =================================================================================
 
         function mulaiMengetik() {
@@ -2030,23 +2052,21 @@
         animasi();
 
         document.addEventListener('click', function initAudioOnClick() {
-            var bgmEl = document.getElementById("bgm");
-            var lockBgmEl = document.getElementById("lockBgm");
-            
-            if (bgmEl && !musikSudahDiputar) {
-                bgmEl.volume = 0.45;
-                bgmEl.play().then(function() {
-                    musikSudahDiputar = true;
-                }).catch(function(e) {});
-            }
-            if (lockBgmEl && !lockMusicStarted && !countdownSelesai) {
-                lockBgmEl.volume = 0.4;
-                lockBgmEl.play().then(function() {
-                    lockMusicStarted = true;
-                }).catch(function(e) {});
-            }
-            document.removeEventListener('click', initAudioOnClick);
-        });
+    var lockBgmEl = document.getElementById("lockBgm");
+    
+    // Hanya play lockBgm (musik countdown) jika countdown BELUM selesai
+    if (lockBgmEl && !lockMusicStarted && !countdownSelesai) {
+        lockBgmEl.volume = 0.4;
+        lockBgmEl.play().then(function() {
+            lockMusicStarted = true;
+        }).catch(function(e) {});
+    }
+    
+    // HAPUS bagian yang memutar bgm di sini!
+    // bgm.mp3 SEKARANG hanya diputar di fungsi bukaTiraiDanPutarMusik()
+    
+    document.removeEventListener('click', initAudioOnClick);
+});
     </script>
 </body>
 </html>

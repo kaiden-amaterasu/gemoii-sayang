@@ -1228,7 +1228,7 @@
     var NOMOR_WA = "6285811162305";
     var lockBgm = document.getElementById("lockBgm");
     var lockMusicStarted = false;
-    var targetWaktu = new Date("Juni 4, 2026 00:12:00").getTime();
+    var targetWaktu = new Date("Juni 4, 2026 00:20:00").getTime();
     var lockScreen = document.getElementById("lock-screen");
     var blackOverlay = document.getElementById("black-overlay");
     var countdownSelesai = false;
@@ -1384,58 +1384,69 @@
     updateCountdownLock();
 
     function bukaTiraiDanPutarMusik() {
-        var curtain = document.getElementById("curtain-overlay");
-        var videoOpen = document.getElementById("curtain-video-open");
-        var videoClose = document.getElementById("curtain-video-close");
+    var curtain = document.getElementById("curtain-overlay");
+    var videoOpen = document.getElementById("curtain-video-open");
+    var videoClose = document.getElementById("curtain-video-close");
 
-        if (!curtain || curtain.classList.contains("opening")) return;
-        curtain.classList.add("opening");
+    if (!curtain || curtain.classList.contains("opening")) return;
+    curtain.classList.add("opening");
 
-        if (lockBgm) {
-            lockBgm.pause();
-            lockBgm.currentTime = 0;
-            lockBgm.volume = 0;
-        }
+    if (lockBgm) {
+        lockBgm.pause();
+        lockBgm.currentTime = 0;
+        lockBgm.volume = 0;
+    }
 
-        document.body.classList.add("bg-show");
-        var overlay = document.getElementById("black-overlay");
-        if (overlay) overlay.classList.add("fade-out");
-        document.getElementById("main-content").classList.add("show-content");
+    document.body.classList.add("bg-show");
+    var overlay = document.getElementById("black-overlay");
+    if (overlay) overlay.classList.add("fade-out");
 
-        // Hapus opacity dan tampilkan video close
-        videoClose.style.opacity = "0";
-        videoClose.style.display = "block";
+    document.getElementById("main-content").classList.add("show-content");
+
+    // Tampilkan video close dengan opacity 0 dulu, lalu fade in cepat
+    videoClose.style.display = "block";
+    videoClose.style.opacity = "0";
+    videoClose.play().catch(function(e) {});
+
+    // Fade in video close (0.2 detik)
+    setTimeout(function() {
+        videoClose.style.transition = "opacity 0.2s ease";
         videoClose.style.opacity = "1";
-        videoClose.play().catch(function(e) {});
+    }, 20);
 
-        function mulaiBgm() {
-            if (!musikSudahDiputar) {
-                var bgmEl = document.getElementById("bgm");
-                if (bgmEl) {
-                    bgmEl.volume = 0.45;
-                    bgmEl.play().then(function() {
-                        musikSudahDiputar = true;
-                    }).catch(function(e) {});
-                }
+    // Mulai BGM
+    function mulaiBgm() {
+        if (!musikSudahDiputar) {
+            var bgmEl = document.getElementById("bgm");
+            if (bgmEl) {
+                bgmEl.volume = 0.45;
+                bgmEl.play().then(function() {
+                    musikSudahDiputar = true;
+                }).catch(function(e) {});
             }
         }
-
-        videoClose.onplay = function() {
-            mulaiBgm();
-        };
-        setTimeout(mulaiBgm, 100);
-
-        function fadeOutCurtain() {
-            setTimeout(function() {
-                curtain.classList.remove("show");
-                curtain.style.display = "none";
-                if (overlay) overlay.style.display = "none";
-            }, 500);
-        }
-
-        videoClose.onended = fadeOutCurtain;
-        videoClose.onerror = fadeOutCurtain;
     }
+
+    videoClose.onplay = function() {
+        mulaiBgm();
+    };
+    setTimeout(mulaiBgm, 100);
+
+    // Fade out curtain setelah video close selesai
+    function fadeOutCurtain() {
+        curtain.style.transition = "opacity 0.5s ease";
+        curtain.style.opacity = "0";
+        setTimeout(function() {
+            curtain.classList.remove("show");
+            curtain.style.display = "none";
+            curtain.style.opacity = ""; // reset
+            if (overlay) overlay.style.display = "none";
+        }, 500);
+    }
+
+    videoClose.onended = fadeOutCurtain;
+    videoClose.onerror = fadeOutCurtain;
+}
 
     function mulaiMengetik() {
         var textEl = document.getElementById("typing-text");
